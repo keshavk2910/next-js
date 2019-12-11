@@ -1,22 +1,13 @@
-import fetch from 'isomorphic-unfetch'
 
 //Components
-import CardList from '../components/card-list/card-list'
 import Layout from '../components/layout'
 
-function Home({props}) {
+function HomePage() {
   return <Layout>
      {
-       <CardList posts={props}/>
+       <h1>This is Home</h1>
       }
       </Layout>
 }
 
-Home.getInitialProps = async () => {
-        const res = await fetch('https://bigbuildingdev.tk/wp-json/wp/v2/posts/?_embed&per_page=12')
-        const json = await res.json()
-        return { props: json }
-}
-
-
-export default Home
+export default HomePage
