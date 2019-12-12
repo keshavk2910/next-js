@@ -20,14 +20,13 @@ class Products extends Component {
         const data = await res.json()
         const pages = await res.headers.get('X-WP-TotalPages');
         const items = await res.headers.get('X-WP-Total');
-      
         return { props: data, loading:false, pages, items }
 }
     constructor(props) {
         super(props);
         this.state = {
         posts:[],
-          page:'1',
+          page:1,
           totalPages:1,
           loading:true,
           items:1
@@ -39,7 +38,7 @@ class Products extends Component {
         const response = await 
         fetch(`https://bigbuildingdev.tk/wp-json/wc/v2/products/?consumer_key=ck_ec5799741c1cc89b7c4e027001591117c0a42142&consumer_secret=cs_eebb7c4994c4676d6ffa536e47bc3245f9dc9815&_embeded&per_page=12&page=${page}`);
         const posts = await response.json();
-        this.setState({ posts:posts, loading:false});
+        this.setState({ posts:posts, loading:false, page:Number(page)});
       } catch (error) {
         console.log(error);
       }
@@ -55,22 +54,29 @@ class Products extends Component {
         }
 
       handlePageClick = pageNumber => {
-        this.setState({ page: pageNumber, loading:true}, () => {
-         this.props.router.push(`/products?page=${pageNumber}`,`/products?page=${pageNumber}`,);
-        });
+        if(this.props.router.query.page == pageNumber){
+          this.setState({ loading:false})
+        } else {
+          this.setState({ page: pageNumber,loading:true}, () => {
+            this.props.router.push(`/products?page=${pageNumber}`,`/products?page=${pageNumber}`,);
+           });
+        }
       };
 
-      componentDidUpdate(prevProps) {
+      componentDidUpdate(prevProps, prevState) {
         if(this.props.router.query.page){
           if(this.props.router.query.page !== prevProps.router.query.page){
             this.getting(this.props.router.query.page)
         }
-       } else {
+      }
+        if(!this.props.router.query.page && prevState.page > 1){
           this.getting(1)
         }
       }
 
+
       render() {
+
   return <Layout>
   <Pagination
           activePage={this.state.page}
