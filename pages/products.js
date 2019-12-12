@@ -1,19 +1,27 @@
 import fetch from 'isomorphic-unfetch'
 import {Component} from 'react'
-import ReactPaginate from 'react-paginate';
 import GridLoader from 'react-spinners/GridLoader'
+import Pagination from "react-js-pagination";
+import Router, {withRouter} from 'next/router'
 
 //Components
 import ProductCardList from '../components/ProductsList/ProductCard-List'
 import Layout from '../components/layout'
 
-
 class Products extends Component {
-    static async getInitialProps() {
-        const res = await fetch('https://bigbuildingdev.tk/wp-json/wc/v2/products/?consumer_key=ck_ec5799741c1cc89b7c4e027001591117c0a42142&consumer_secret=cs_eebb7c4994c4676d6ffa536e47bc3245f9dc9815&_embeded&per_page=12')
-        const json = await res.json()
+  static getInitialProps = async function(context) {
+      const { page } = context.query;
+      let res;
+          if(page){
+            res = await fetch(`https://bigbuildingdev.tk/wp-json/wc/v2/products/?consumer_key=ck_ec5799741c1cc89b7c4e027001591117c0a42142&consumer_secret=cs_eebb7c4994c4676d6ffa536e47bc3245f9dc9815&_embeded&per_page=12&page=${page}`)
+          } else {
+            res = await fetch(`https://bigbuildingdev.tk/wp-json/wc/v2/products/?consumer_key=ck_ec5799741c1cc89b7c4e027001591117c0a42142&consumer_secret=cs_eebb7c4994c4676d6ffa536e47bc3245f9dc9815&_embeded&per_page=12`)
+          }
+        const data = await res.json()
         const pages = await res.headers.get('X-WP-TotalPages');
-        return { props: json, loading:false, pages }
+        const items = await res.headers.get('X-WP-Total');
+      
+        return { props: data, loading:false, pages, items }
 }
     constructor(props) {
         super(props);
@@ -21,14 +29,15 @@ class Products extends Component {
         posts:[],
           page:'1',
           totalPages:1,
-          loading:true
+          loading:true,
+          items:1
         };
       }
 
-      async getting() {
+      async getting(page) {
         try {
         const response = await 
-        fetch(`https://bigbuildingdev.tk/wp-json/wc/v2/products/?consumer_key=ck_ec5799741c1cc89b7c4e027001591117c0a42142&consumer_secret=cs_eebb7c4994c4676d6ffa536e47bc3245f9dc9815&_embeded&per_page=12&page=${this.state.page}`);
+        fetch(`https://bigbuildingdev.tk/wp-json/wc/v2/products/?consumer_key=ck_ec5799741c1cc89b7c4e027001591117c0a42142&consumer_secret=cs_eebb7c4994c4676d6ffa536e47bc3245f9dc9815&_embeded&per_page=12&page=${page}`);
         const posts = await response.json();
         this.setState({ posts:posts, loading:false});
       } catch (error) {
@@ -40,63 +49,55 @@ class Products extends Component {
         this.setState({
             posts: this.props.props,
             totalPages: Number(this.props.pages),
+            items:Number(this.props.items),
             loading:this.props.loading
           })
-          console.log(this.props)
-      }
-      handlePageClick = data => {
-        let selected = data.selected;
-        this.setState({ page: selected+1, loading:true}, () => {
-          this.getting();
-        }, ()=>console.log(this.state.page));        console.log('handle')
+        }
 
+      handlePageClick = pageNumber => {
+        this.setState({ page: pageNumber, loading:true}, () => {
+         this.props.router.push(`/products?page=${pageNumber}`,`/products?page=${pageNumber}`,);
+        });
       };
+
+      componentDidUpdate(prevProps) {
+        if(this.props.router.query.page){
+          if(this.props.router.query.page !== prevProps.router.query.page){
+            this.getting(this.props.router.query.page)
+        }
+       } else {
+          this.getting(1)
+        }
+      }
 
       render() {
   return <Layout>
-  <ReactPaginate
-          previousLabel={'previous'}
-          nextLabel={'next'}
-          breakLabel={'...'}
-          breakClassName={'break-me'}
-          pageCount={this.state.totalPages}
-          marginPagesDisplayed={2}
-          pageRangeDisplayed={2}
-          initialPage={0}
-          disableInitialCallback
-          onPageChange={this.handlePageClick}
-          containerClassName={'pagination'}
-          subContainerClassName={'pages pagination'}
-          activeClassName={'active'}
-          forcePage={this.state.page-1}
-        />
+  <Pagination
+          activePage={this.state.page}
+          itemsCountPerPage={12}
+          totalItemsCount={this.state.items}
+          pageRangeDisplayed={5}
+          onChange={this.handlePageClick}
+        /> 
      { this.state.loading === false ?
-      <ProductCardList posts={this.state.posts} /> :
+      <ProductCardList posts={this.state.posts} /> 
+        :
       <GridLoader
       sizeUnit={"px"}
       size={50}
       color={'#f1592a'}
       loading={this.state.loading}/>
       }
-      <ReactPaginate
-          previousLabel={'previous'}
-          nextLabel={'next'}
-          breakLabel={'...'}
-          breakClassName={'break-me'}
-          pageCount={this.state.totalPages}
-          marginPagesDisplayed={2}
-          pageRangeDisplayed={2}
-          initialPage={0}
-          disableInitialCallback
-          onPageChange={this.handlePageClick}
-          containerClassName={'pagination'}
-          subContainerClassName={'pages pagination'}
-          activeClassName={'active'}
-          forcePage={this.state.page-1}
-        />
+      <Pagination
+          activePage={this.state.page}
+          itemsCountPerPage={12}
+          totalItemsCount={this.state.items}
+          pageRangeDisplayed={5}
+          onChange={this.handlePageClick}
+        /> 
       </Layout>
 }
 }
 
 
-export default Products
+export default withRouter(Products)

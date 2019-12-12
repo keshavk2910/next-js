@@ -3,34 +3,42 @@ import ProgressiveImage from '../ProgressiveImage';
 
 const ProductCard = ({post}) => {
   let cloudurl = 'https://res.cloudinary.com/dealsnow/image/upload/t_forbig/'
-  let cloudurlbig = 'https://res.cloudinary.com/dealsnow/image/upload/c_scale,f_auto,h_320,w_500/'
+  let cloudurlbig = 'https://res.cloudinary.com/dealsnow/image/upload/c_scale,f_auto,h_303,w_473/'
   let url = post.images[0].src
   let filename = url.substring(url.lastIndexOf('/')+1);
     return (
         <React.Fragment>
         <Link href={`/product/[id]`} as={`/product/${post.slug}`}>
+        <a>
     <div className='card-container'>
         <h1 key={post.id}>{post.name}</h1>
             {post.images ?
-              <ProgressiveImage
+              <div className="maximg"><ProgressiveImage
               alt={post.name}
               preview={cloudurl+filename}
               image={cloudurlbig+filename}
-            />
+            /></div>
             : null}
             <div className="price" dangerouslySetInnerHTML={{ __html: post.price_html }}/>
             <div className="content" dangerouslySetInnerHTML={{ __html: post.description }} />
     </div>
+    </a>
     </Link>
     <style jsx>{`
-    
+    .maximg {
+    width: 473px;
+    height: 303px;
+    }
+    a {
+      text-decoration:none;
+      color:#000
+    }
     .card-container {
         
         background-color: #fff;
         border: 1px solid grey;
         border-radius: 5px;
         padding: 25px;
-        cursor: pointer;
         -moz-osx-font-smoothing: grayscale;
         backface-visibility: hidden;
         transform: translateZ(0);
