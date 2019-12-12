@@ -25,10 +25,6 @@ const ProductCard = ({post}) => {
     </a>
     </Link>
     <style jsx>{`
-    .maximg {
-    width: 473px;
-    height: 303px;
-    }
     a {
       text-decoration:none;
       color:#000
