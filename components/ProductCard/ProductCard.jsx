@@ -2,10 +2,10 @@ import Link from 'next/link';
 import ProgressiveImage from '../ProgressiveImage';
 
 const ProductCard = ({post}) => {
-  let cloudurl = 'https://ik.imagekit.io/zkvrzayer06/tr:w-20,h-20/wp-content/uploads/'
-  let cloudurlbig = 'https://ik.imagekit.io/zkvrzayer06/tr:w-470,h-314/wp-content/uploads/'
+  let cloudurl = 'https://ik.imagekit.io/zkvrzayer06/tr:w-20,h-20/'
+  let cloudurlbig = 'https://ik.imagekit.io/zkvrzayer06/tr:w-470,h-314/'
   let url = post.images[0].src
-  let filename = url.substring(url.lastIndexOf('/')+1);
+  let filename = url.substring(url.indexOf('/', 10) + 1);
     return (
         <React.Fragment>
         <Link href={`/product/[id]`} as={`/product/${post.slug}`}>

@@ -24,10 +24,10 @@ componentDidMount() {
 }
 
 render() {
-  let cloudurl = 'https://ik.imagekit.io/zkvrzayer06/tr:w-20,h-20/wp-content/uploads/'
-  let cloudurlbig = 'https://ik.imagekit.io/zkvrzayer06/tr:w-470,h-314/wp-content/uploads/'
+  let cloudurl = 'https://ik.imagekit.io/zkvrzayer06/tr:w-20,h-20/'
+  let cloudurlbig = 'https://ik.imagekit.io/zkvrzayer06/tr:w-470,h-314/'
   let url = this.props.props.images[0].src
-  let filename = url.substring(url.lastIndexOf('/')+1);
+  let filename = url.substring(url.indexOf('/', 10) + 1);
   const post = this.props.props
   return  <Layout>
   <React.Fragment>
