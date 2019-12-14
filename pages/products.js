@@ -13,9 +13,9 @@ class Products extends Component {
       const { page } = context.query;
       let res;
           if(page){
-            res = await fetch(`https://bigbuildingdev.tk/wp-json/wc/v2/products/?consumer_key=ck_ec5799741c1cc89b7c4e027001591117c0a42142&consumer_secret=cs_eebb7c4994c4676d6ffa536e47bc3245f9dc9815&_embeded&per_page=12&page=${page}`)
+            res = await fetch(`https://bigbuildingdev.tk/wp-json/wc/v2/products/?consumer_key=ck_f9ee88d5eb42a67ca37c755db128f76f0bff399e&consumer_secret=cs_e250fdf46dd1559b92c8018cc06891b8104281af&_embeded&per_page=12&page=${page}`)
           } else {
-            res = await fetch(`https://bigbuildingdev.tk/wp-json/wc/v2/products/?consumer_key=ck_ec5799741c1cc89b7c4e027001591117c0a42142&consumer_secret=cs_eebb7c4994c4676d6ffa536e47bc3245f9dc9815&_embeded&per_page=12`)
+            res = await fetch(`https://bigbuildingdev.tk/wp-json/wc/v2/products/?consumer_key=ck_f9ee88d5eb42a67ca37c755db128f76f0bff399e&consumer_secret=cs_e250fdf46dd1559b92c8018cc06891b8104281af&_embeded&per_page=12`)
           }
         const data = await res.json()
         const pages = await res.headers.get('X-WP-TotalPages');
@@ -36,7 +36,7 @@ class Products extends Component {
       async getting(page) {
         try {
         const response = await 
-        fetch(`https://bigbuildingdev.tk/wp-json/wc/v2/products/?consumer_key=ck_ec5799741c1cc89b7c4e027001591117c0a42142&consumer_secret=cs_eebb7c4994c4676d6ffa536e47bc3245f9dc9815&_embeded&per_page=12&page=${page}`);
+        fetch(`https://bigbuildingdev.tk/wp-json/wc/v2/products/?consumer_key=ck_f9ee88d5eb42a67ca37c755db128f76f0bff399e&consumer_secret=cs_e250fdf46dd1559b92c8018cc06891b8104281af&_embeded&per_page=12&page=${page}`);
         const posts = await response.json();
         this.setState({ posts:posts, loading:false, page:Number(page)});
       } catch (error) {
@@ -51,14 +51,18 @@ class Products extends Component {
             items:Number(this.props.items),
             loading:this.props.loading
           })
+          if(this.props.router.query.page !== undefined){
+              this.setState({page:this.props.router.query.page})
+          }
         }
 
       handlePageClick = pageNumber => {
         if(this.props.router.query.page == pageNumber){
           this.setState({ loading:false})
+          console.log('noload')
         } else {
           this.setState({ page: pageNumber,loading:true}, () => {
-            this.props.router.push(`/products?page=${pageNumber}`,`/products?page=${pageNumber}`,);
+            this.props.router.push(`/products?page=${pageNumber}`,`/products?page=${pageNumber}`);
            });
         }
       };

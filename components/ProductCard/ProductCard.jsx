@@ -2,8 +2,8 @@ import Link from 'next/link';
 import ProgressiveImage from '../ProgressiveImage';
 
 const ProductCard = ({post}) => {
-  let cloudurl = 'https://res.cloudinary.com/dealsnow/image/upload/t_forbig/'
-  let cloudurlbig = 'https://res.cloudinary.com/dealsnow/image/upload/c_scale,f_auto,h_303,w_473/'
+  let cloudurl = 'https://ik.imagekit.io/zkvrzayer06/tr:w-20,h-20/wp-content/uploads/'
+  let cloudurlbig = 'https://ik.imagekit.io/zkvrzayer06/tr:w-470,h-314/wp-content/uploads/'
   let url = post.images[0].src
   let filename = url.substring(url.lastIndexOf('/')+1);
     return (
