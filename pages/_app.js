@@ -2,7 +2,6 @@ import React from 'react'
 import App from 'next/app'
 import Router from 'next/router'
 import NProgress from 'nprogress'
-import Head from 'next/head'
 
 let cachedScrollPositions = [];
 
@@ -55,10 +54,6 @@ class MyApp extends App {
   render() {
     const { Component, pageProps } = this.props
     return  <>
-    <Head>
-    {/* Import CSS for nprogress */}
-    <link rel="stylesheet" type="text/css" href="/nprogress.css" />
-  </Head>
   <Component {...pageProps} />
   </>
   }

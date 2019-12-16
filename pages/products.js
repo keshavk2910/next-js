@@ -2,7 +2,7 @@ import fetch from 'isomorphic-unfetch'
 import {Component} from 'react'
 import GridLoader from 'react-spinners/GridLoader'
 import Pagination from "react-js-pagination";
-import Router, {withRouter} from 'next/router'
+import {withRouter} from 'next/router'
 
 //Components
 import ProductCardList from '../components/ProductsList/ProductCard-List'
