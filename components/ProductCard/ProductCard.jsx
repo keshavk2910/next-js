@@ -19,8 +19,8 @@ const ProductCard = ({post}) => {
               image={cloudurlbig+filename}
             /></div>
             : null}
-            <div className="price" dangerouslySetInnerHTML={{ __html: post.price_html }}/>
-            <div className="content" dangerouslySetInnerHTML={{ __html: post.description }} />
+            {post.price_html ? <div className="price" dangerouslySetInnerHTML={{ __html: post.price_html }}/> :""}
+            {post.description ?<div className="content" dangerouslySetInnerHTML={{ __html: post.description }} />:""}
     </div>
     </a>
     </Link>

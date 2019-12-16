@@ -13,9 +13,9 @@ class Products extends Component {
       const { page } = context.query;
       let res;
           if(page){
-            res = await fetch(`https://bigbuildingdev.tk/wp-json/wc/v2/products/?consumer_key=ck_f9ee88d5eb42a67ca37c755db128f76f0bff399e&consumer_secret=cs_e250fdf46dd1559b92c8018cc06891b8104281af&_embeded&per_page=12&page=${page}`)
+            res = await fetch(`https://bigbuildingdev.tk/wp-json/wc/v2/products/?consumer_key=ck_f9ee88d5eb42a67ca37c755db128f76f0bff399e&consumer_secret=cs_e250fdf46dd1559b92c8018cc06891b8104281af&_embeded&status=publish&per_page=12&page=${page}`)
           } else {
-            res = await fetch(`https://bigbuildingdev.tk/wp-json/wc/v2/products/?consumer_key=ck_f9ee88d5eb42a67ca37c755db128f76f0bff399e&consumer_secret=cs_e250fdf46dd1559b92c8018cc06891b8104281af&_embeded&per_page=12`)
+            res = await fetch(`https://bigbuildingdev.tk/wp-json/wc/v2/products/?consumer_key=ck_f9ee88d5eb42a67ca37c755db128f76f0bff399e&consumer_secret=cs_e250fdf46dd1559b92c8018cc06891b8104281af&_embeded&per_page=12&status=publish`)
           }
         const data = await res.json()
         const pages = await res.headers.get('X-WP-TotalPages');
@@ -36,7 +36,7 @@ class Products extends Component {
       async getting(page) {
         try {
         const response = await 
-        fetch(`https://bigbuildingdev.tk/wp-json/wc/v2/products/?consumer_key=ck_f9ee88d5eb42a67ca37c755db128f76f0bff399e&consumer_secret=cs_e250fdf46dd1559b92c8018cc06891b8104281af&_embeded&per_page=12&page=${page}`);
+        fetch(`https://bigbuildingdev.tk/wp-json/wc/v2/products/?consumer_key=ck_f9ee88d5eb42a67ca37c755db128f76f0bff399e&consumer_secret=cs_e250fdf46dd1559b92c8018cc06891b8104281af&_embeded&status=publish&per_page=12&page=${page}`);
         const posts = await response.json();
         this.setState({ posts:posts, loading:false, page:Number(page)});
       } catch (error) {
@@ -105,6 +105,21 @@ class Products extends Component {
           pageRangeDisplayed={5}
           onChange={this.handlePageClick}
         /> 
+        <style jsx global>{`
+        ul.pagination {
+          margin: 15px;
+          text-align: center;
+        }
+      ul.pagination li {
+        display:inline-block;
+        padding:10px 15px;
+      }
+      ul.pagination li a {
+        padding:5px;
+        background-color:#eee;
+      }
+      `}
+      </style>
       </Layout>
 }
 }
