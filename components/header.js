@@ -111,6 +111,12 @@ export default function Header() {
     #main-wrap {
       min-height:100vh;
     }
+    .bm-burger-button {
+      position:absolute!important;
+    }
+    span.formtext {
+      color:#fff!important;
+    }
     `}
 </style>
 <style jsx>{`
