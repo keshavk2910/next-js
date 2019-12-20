@@ -2,6 +2,9 @@ import React from 'react'
 import App from 'next/app'
 import Router from 'next/router'
 import NProgress from 'nprogress'
+import {Provider} from "react-redux";
+import {makeStore} from "../redux/store";
+import withRedux from "next-redux-wrapper";
 
 let cachedScrollPositions = [];
 
@@ -13,17 +16,17 @@ Router.events.on('routeChangeError', () => NProgress.done())
 
 
 class MyApp extends App {
-  // Only uncomment this method if you have blocking data requirements for
-  // every single page in your application. This disables the ability to
-  // perform automatic static optimization, causing every page in your app to
-  // be server-side rendered.
-  //
-  // static async getInitialProps(appContext) {
-  //   // calls page's `getInitialProps` and fills `appProps.pageProps`
-  //   const appProps = await App.getInitialProps(appContext);
-  //
-  //   return { ...appProps }
-  // }
+
+  static async getInitialProps({Component, ctx}) {
+
+    return {
+        pageProps: {
+            // Call page-level getInitialProps
+            ...(Component.getInitialProps ? await Component.getInitialProps(ctx) : {})
+        }
+    };
+
+}
   componentDidMount() {
         if ('scrollRestoration' in window.history) {
           window.history.scrollRestoration = 'manual';
@@ -52,11 +55,13 @@ class MyApp extends App {
         }
 }
   render() {
-    const { Component, pageProps } = this.props
+    const {Component, pageProps, store} = this.props;
     return  <>
-  <Component {...pageProps} />
+    <Provider store={store}>
+    <Component {...pageProps} />
+    </Provider>
   </>
   }
 }
 
-export default MyApp
+export default withRedux(makeStore, {debug: true})(MyApp);

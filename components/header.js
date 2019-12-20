@@ -15,11 +15,14 @@ export default function Header() {
     <Menu right pageWrapId={ "main-wrap" } outerContainerId={ "outer-wrap" } width={ '50%' } >
       <ActiveLink activeClassName="nav-active" href="/">
         <a className="menu-item"><span>Home</span></a>
-      </ActiveLink><ActiveLink activeClassName="nav-active" href="/products">
+      </ActiveLink>
+      <ActiveLink activeClassName="nav-active" href="/products">
         <a className="menu-item"><span>Products</span></a>
-      </ActiveLink><ActiveLink activeClassName="nav-active" href="/about">
+      </ActiveLink>
+      <ActiveLink activeClassName="nav-active" href="/about">
         <a className="menu-item"><span>About</span></a>
-      </ActiveLink><ActiveLink activeClassName="nav-active" href="/contact">
+      </ActiveLink>
+      <ActiveLink activeClassName="nav-active" href="/contact">
         <a className="menu-item"><span>Contact</span></a>
       </ActiveLink>
       </Menu>
@@ -43,6 +46,9 @@ export default function Header() {
       <span>Contact</span>
       </li></a></ActiveLink>
 
+      <ActiveLink activeClassName="nav-active" href="/cart"><a><li>
+      <span>Cart</span>
+      </li></a></ActiveLink>
       </ul>
     </header>
     <style jsx global>{`
