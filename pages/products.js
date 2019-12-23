@@ -75,7 +75,7 @@ class Products extends Component {
   return (
   <Layout>
   <Head>
-  <title>ALl Products</title>
+  <title>ALL Products</title>
   <meta name="description" content="This is test site for React js" />
   </Head>
   <Pagination

@@ -17,6 +17,14 @@ export default function Meta() {
   url("fonts/51fdf8021065497210ca54837e1601e9.ttf") format("truetype"), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
   url("fonts/51fdf8021065497210ca54837e1601e9.svg#Neue Einstellung Bold") format("svg"); /* iOS 4.1- */
 }
+.MuiButton-containedPrimary {
+  background-color: #f1592a!important;
+}
+.MuiButton-containedSecondary {
+background-color:#fff!important;
+color:#f1592a!important;
+border:1px solid #f1592a!important;
+}
     `}</style>
   </div>
 )

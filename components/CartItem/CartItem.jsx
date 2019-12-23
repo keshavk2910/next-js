@@ -1,5 +1,7 @@
 import Link from 'next/link';
 import ProgressiveImage from '../ProgressiveImage';
+import Button from '@material-ui/core/Button';
+import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
 
 const CartItem = ({post, dispatch}) => {
   let handleClick = () => {
@@ -25,7 +27,7 @@ const CartItem = ({post, dispatch}) => {
             </Link>
             {post.price_html ? <div className="price" dangerouslySetInnerHTML={{ __html: post.price_html }}/> :""}
             {post.description ?<div className="content" dangerouslySetInnerHTML={{ __html: post.description }} />:""}
-            <button onClick={handleClick}>REMOVE</button>
+            <Button variant="contained" color="secondary" onClick={handleClick} className="primary remove" endIcon={<RemoveCircleIcon/>}>REMOVE FROM QUOTE</Button>
     </div>
     
     <style jsx>{`
