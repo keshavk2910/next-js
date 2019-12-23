@@ -1,21 +1,30 @@
 import Layout from '../components/layout'
 import {connect} from "react-redux";
-import {Component} from "react";
+import Grid from '@material-ui/core/Grid';
+import Container from '@material-ui/core/Container';
+import CartItem from '../components/CartItem/CartItem'
 
-class Cart extends Component {
-
-  render(){
-    console.log(10,this.props)
-  return <Layout>
-     <h1>This is Cart page have</h1>
+const Cart = ({currentProducts, dispatch}) => {
+  return (
+    <Layout>
+     <Container maxWidth="xl">
+     <Grid container spacing={3}>
      {
-      this.props.currentProducts.map(id => 
-       <h1 key={id.id}>{id.id}</h1>
+      currentProducts.map(product => 
+       <Grid key={ product.id } item xs={12} sm={12} md={6} lg={4} xl={3}>
+          <CartItem post={product} dispatch={dispatch}/>
+        </Grid>
           )
       }
+      </Grid>
+      </Container>
       </Layout>
-}
+      );
 }
 
 
-export default connect(state => state)(Cart);
+const mapStateToProps = ({products}) => ({
+  currentProducts: products.currentProducts
+});
+
+export default connect(mapStateToProps)(Cart);

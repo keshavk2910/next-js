@@ -1,21 +1,14 @@
 import Link from 'next/link';
 import ProgressiveImage from '../ProgressiveImage';
-import {connect} from "react-redux";
 
-const ProductCard = ({post, dispatch, currentProducts}) => {
-  let handleAdd = () => {
-    dispatch({type: 'ADD_PRODUCT_TO_CART', payload: post});
-  }
-  let handleRemove = () => {
+const CartItem = ({post, dispatch}) => {
+  let handleClick = () => {
     dispatch({type: 'REMOVE_ITEM_FROM_CART', payload: post.id});
   }
   let cloudurl = 'https://ik.imagekit.io/zkvrzayer06/tr:w-20,h-20/'
   let cloudurlbig = 'https://ik.imagekit.io/zkvrzayer06/tr:w-470,h-314/'
   let url = post.images[0].src
   let filename = url.substring(url.indexOf('/', 10) + 1);
-
-  const existingInCart = currentProducts.find(currentProduct => currentProduct.id === post.id)
-  
     return (
         <React.Fragment>
     <div className='card-container'>
@@ -32,11 +25,7 @@ const ProductCard = ({post, dispatch, currentProducts}) => {
             </Link>
             {post.price_html ? <div className="price" dangerouslySetInnerHTML={{ __html: post.price_html }}/> :""}
             {post.description ?<div className="content" dangerouslySetInnerHTML={{ __html: post.description }} />:""}
-            {existingInCart ? <>
-              <button disabled>ADDED IN QUOTE</button> 
-              <button onClick={handleRemove}>REMOVE FROM QUOTE</button>
-              </>
-               : <button onClick={handleAdd}>ADD TO QUOTE</button>}
+            <button onClick={handleClick}>REMOVE</button>
     </div>
     
     <style jsx>{`
@@ -83,9 +72,4 @@ const ProductCard = ({post, dispatch, currentProducts}) => {
     </React.Fragment>
     );
     }
-
-    const mapStateToProps = ({products}) => ({
-      currentProducts: products.currentProducts
-    });
-
-export default connect(mapStateToProps)(ProductCard);
+export default CartItem;

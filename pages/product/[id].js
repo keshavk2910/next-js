@@ -1,28 +1,16 @@
 import fetch from 'isomorphic-unfetch';
 import Layout from '../../components/layout';
-import {HashLoader} from 'react-spinners';
 import {Component} from 'react';
 import ProgressiveImage from '../../components/ProgressiveImage';
 import {connect} from "react-redux";
 
 class Product extends Component {
-  static async getInitialProps(context, store) {
+  static async getInitialProps(context) {
     const { id } = context.query;
     const res = await fetch(`https://bigbuildingdev.tk/wp-json/wc/v2/products/?consumer_key=ck_f9ee88d5eb42a67ca37c755db128f76f0bff399e&consumer_secret=cs_e250fdf46dd1559b92c8018cc06891b8104281af&_embeded&slug=${id}`);
     const data = await res.json();
-    return { props:data[0], store}
+    return { props:data[0]}
   };
-
-  constructor(props){
-    super();
-    this.state = {
-        loading:true
-    }
-}
-
-componentDidMount() {
-  {this.props.props !== null ? this.setState({loading:false}) : null}
-}
 
 handleClick = () => {
   this.props.dispatch({type: 'ADD_PRODUCT_TO_CART', payload: this.props.props.id});
@@ -36,8 +24,6 @@ render() {
   let filename = url.substring(url.indexOf('/', 10) + 1);
   const post = this.props.props
   return  <Layout>
-  <React.Fragment>
-  {this.state.loading === false?
     <div className="single">
       <h1>{post.name}</h1>
       {post.images ?
@@ -49,19 +35,10 @@ render() {
         : null}
         <div className="price" dangerouslySetInnerHTML={{ __html: post.price_html }}/>
       <div dangerouslySetInnerHTML={{ __html: post.description }} />
-      <button onClick={this.handleClick}>ADD TO CART</button>
-    </div>:
- <div className="loader"><HashLoader
- sizeUnit={"px"}
- size={150}
- color={'#f1592a'}
- loading={this.state.loading}
-/></div>
-}
-</React.Fragment>
+      <button onClick={this.handleClick}>ADD TO QUOTE</button>
+    </div>
         </Layout>
     
 }
 }
-
-export default connect(state => state)(Product);
+export default connect(null)(Product);

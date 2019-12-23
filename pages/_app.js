@@ -27,6 +27,9 @@ class MyApp extends App {
     };
 
 }
+ progress = () =>{
+  NProgress.start()
+}
   componentDidMount() {
         if ('scrollRestoration' in window.history) {
           window.history.scrollRestoration = 'manual';
@@ -64,4 +67,4 @@ class MyApp extends App {
   }
 }
 
-export default withRedux(makeStore, {debug: true})(MyApp);
+export default withRedux(makeStore, {storeKey: 'cart'})(MyApp);

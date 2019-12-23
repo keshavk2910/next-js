@@ -1,14 +1,17 @@
 import ActiveLink from './ActiveLink/ActiveLink';
 import Link from 'next/link';
 import { slide as Menu } from 'react-burger-menu'
+import {connect} from 'react-redux';
 
-export default function Header() {
+
+function Header(props) {
+  let cartItems = props.currentProducts.length;
     return (
       <>
     <header className="Header">
     <Link href="/">
         <div className="logo-container">
-        <img src="https://ik.imagekit.io/zkvrzayer06/tr:w-88/wp-content/uploads/2018/09/1.png"/>
+        <img alt="Next Test" src="https://ik.imagekit.io/zkvrzayer06/tr:w-88/wp-content/uploads/2018/09/1.png"/>
         </div>
         </Link>
         <div className="mobile-show">
@@ -25,6 +28,9 @@ export default function Header() {
       <ActiveLink activeClassName="nav-active" href="/contact">
         <a className="menu-item"><span>Contact</span></a>
       </ActiveLink>
+      <ActiveLink activeClassName="nav-active" href="/cart"><a><li>
+      <span>QUOTE LIST ({cartItems})</span>
+      </li></a></ActiveLink>
       </Menu>
       </div>
 
@@ -47,7 +53,7 @@ export default function Header() {
       </li></a></ActiveLink>
 
       <ActiveLink activeClassName="nav-active" href="/cart"><a><li>
-      <span>Cart</span>
+      <span>QUOTE LIST ({cartItems})</span>
       </li></a></ActiveLink>
       </ul>
     </header>
@@ -167,3 +173,7 @@ export default function Header() {
   </>
     );
 }
+const mapStateToProps = ({products}) => ({
+  currentProducts: products.currentProducts
+});
+export default connect(mapStateToProps)(Header);
