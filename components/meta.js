@@ -25,6 +25,18 @@ background-color:#fff!important;
 color:#f1592a!important;
 border:1px solid #f1592a!important;
 }
+ul.pagination {
+  margin: 15px;
+  text-align: center;
+}
+ul.pagination li {
+display:inline-block;
+padding:10px 15px;
+}
+ul.pagination li a {
+padding:5px;
+background-color:#eee;
+}
     `}</style>
   </div>
 )

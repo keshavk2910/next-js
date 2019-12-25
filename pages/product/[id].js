@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import Button from '@material-ui/core/Button';
 import PostAddIcon from '@material-ui/icons/PostAdd';
 import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
+import Link from 'next/link';
 
 const Product = ({post, dispatch, currentProducts}) => {
   let handleAdd = () => {
@@ -36,7 +37,23 @@ const Product = ({post, dispatch, currentProducts}) => {
       {existingInCart ? 
       <><Button variant="contained" color="secondary" onClick={handleRemove} className="primary remove" endIcon={<RemoveCircleIcon/>}>REMOVE FROM QUOTE</Button></>
      : <><Button variant="contained" color="primary" onClick={handleAdd} className="primary" endIcon={<PostAddIcon/>}>ADD TO QUOTE</Button></>}
-    </div>
+      <div className="categories">{post.categories.map( cat =>
+        <Link key={cat.id} href={`/product-category/[name]`} as={`/product-category/${cat.slug}`}><a>{cat.name}</a></Link>
+      )}
+      </div>
+     </div>
+     <style jsx>{`
+     .categories {
+       margin-top:20px;
+     }
+     .categories a {
+       color:#f1592a;
+       text-decoration:underline;
+       margin:0 15px;
+     }
+     
+     
+     `}</style>
         </Layout>
     
 }

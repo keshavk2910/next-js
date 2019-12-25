@@ -1,12 +1,11 @@
-import { createStore, applyMiddleware } from 'redux';
+import { createStore } from 'redux';
 import rootReducer from './root-reducer';
-import logger from 'redux-logger';
 import { persistStore } from 'redux-persist';
 import hardSet from 'redux-persist/lib/stateReconciler/hardSet'
 
 export const makeStore = initialState => {
     let store;
-    const middlewares = [logger];
+    //const middlewares = [logger];
     const isClient = typeof window !== 'undefined';
     if (isClient) {
         const { persistReducer } = require('redux-persist');
@@ -18,12 +17,11 @@ export const makeStore = initialState => {
         };
         store = createStore(
           persistReducer(persistConfig, rootReducer),
-          initialState,
-          applyMiddleware(...middlewares)
+          initialState
         );
          store.__PERSISTOR = persistStore(store);
       } else {
-        store  = createStore(rootReducer, initialState, applyMiddleware(...middlewares));
+        store  = createStore(rootReducer, initialState);
       }
 
     if (module.hot) {
